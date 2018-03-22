@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TP : Le super jeux de combats</title>
+
+    <meta charset="utf-8" />
+    <link style="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <a href="?page=connexion">Se connecter</a>
+    <form action="" method="post">
+    	<fieldset>
+        <legend>Création de compte</legend>
+        <p>
+          <label for="pseudo">Pseudo</label>
+          <input type="text" name="pseudo" maxlength="50" />
+        </p>
+        <p>
+        	<label for="adresseMail">Adresse Email</label>
+          <input type="text" name="adresseMail" maxlength="50" />
+        </p>
+        <p>
+        	<label>Mot de passe</label>
+        	<input type="password" name="password" maxlength="50" />
+
+          <input type="submit" value="CreerCompte" name="CreerCompte" />
+         </fieldset>
+    </form>
+  
+</body>
+</html>
+ 
+

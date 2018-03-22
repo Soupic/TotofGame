@@ -1,0 +1,13 @@
+{
+    "name": "stagiaire/mini_jeux",
+    "authors": [
+        {
+            "name": "Soupic",
+            "email": "soupic@protonmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"App\\": "src/"}
+    }
+}
