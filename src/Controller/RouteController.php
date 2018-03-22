@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\GameController;
+use \App\Controller\LoginController;
 
 class RouteController
 {
@@ -15,9 +16,9 @@ class RouteController
   ];
 
   /**
-   * [parseRoute description]
+   * Parse les URL pour les comparé avec un tableau de valeur
    * @param  [string] $path URL
-   * @return [type]       [description]
+   * @return [string] retourn l'url si valide ou erreur 404
    */
   public function parseRoute($path)
   {
@@ -27,25 +28,36 @@ class RouteController
       foreach ($this->routes as $nameRoute => $url) {
         // On compare l'url et le chemin fourni
         if ($url === $path) {
-          // On appel une methode avec en paramètre le nom de la route
+          // On vérifie sir $_POST n'est pas vide
+          if (isset($_POST)) {
+            // On retourne la méthode d'appel du controller avec $_POST
+            return $this->getController($nameRoute, $_POST);
+          }
+          // On retourne une methode avec en paramètre la clé de la route
           return $this->getController($nameRoute);
         }
       }
-      // sinon on renvois une erreur 404
+      // Sinon on renvois une erreur 404
       return $this->error404;
     }
   }
 
-  public function getController($pathName)
+  public function getController($pathName, $post = null)
   {
     switch ($pathName) {
       case 'index':
         $newGame = new GameController;
         $newGame->newGame();
         break;
-
+      case 'login':
+        $login = new LoginController;
+        if (!empty($_POST)) {
+          $login->login($_POST);
+        }
+        $login->showLoginForm();
+        break;
       default:
-        # code...
+        var_dump('default');
         break;
     }
   }

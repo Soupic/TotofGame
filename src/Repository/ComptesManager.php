@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Compte;
+
 class ComptesManager
 {
 
@@ -21,8 +23,11 @@ class ComptesManager
     $this->setDb($this->dbConnect());
   }
 
-
-  public function setDb(PDO $db)
+  /**
+   * Mehtode d'appel à PDO
+   * @param PDO $db Récupère la class PDO de php (l'antislash indique qu'il doit chercher dans php)
+   */
+  public function setDb(\PDO $db)
   {
     $this->_db = $db;
   }
@@ -31,7 +36,7 @@ class ComptesManager
   {
     try
     {
-      $db = new PDO('mysql:host=localhost;dbname=mini_jeu', 'root', 'dawan');
+      $db = new \PDO('mysql:host=localhost;dbname=mini_jeu', 'root', 'dawan');
       return $db;
     }
     catch(Exception $e)
@@ -62,7 +67,7 @@ class ComptesManager
     $req = $this->dbConnect()->prepare('SELECT * FROM compte_utilisateur WHERE pseudo = :pseudo');
 
     $req->execute([':pseudo' => $infoPseudo]);
-    $donnees = $req->fetch(PDO::FETCH_ASSOC);
+    $donnees = $req->fetch(\PDO::FETCH_ASSOC);
 
     if (password_verify($infoPassword,$donnees['password']))
     {

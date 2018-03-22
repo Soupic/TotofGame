@@ -20,7 +20,7 @@ class GameController
 
   public function newGame()
   {
-    require self::PATH_VIEW . 'newGame.html';
+    require self::PATH_VIEW . '/Game/newGame.html';
   }
 
 }
