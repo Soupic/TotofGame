@@ -52,12 +52,12 @@ class RouteController
       case 'login':
         $login = new LoginController;
         if (!empty($_POST)) {
-          $login->login($_POST);
+          $login->newAccount($_POST);
         }
-        $login->showLoginForm();
+        $login->showNewAccountForm();
         break;
       default:
-        var_dump('default');
+        $this->error404;
         break;
     }
   }

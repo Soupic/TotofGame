@@ -7,12 +7,12 @@ use App\Controller\GameController;
 use App\Entity\Compte;
 
 /**
- *
+ * [LoginController gère les connexion utilisateur ainsi que les formulaires]
  */
 class LoginController
 {
   /**
-   * [private description]
+   * [Reference in CompteManager Repository]
    * @var ComptesManager
    */
   private $repository;
@@ -26,11 +26,12 @@ class LoginController
   }
 
 /**
- * [login description]
- * @param  [type] $form [description]
- * @return [type]       [description]
+ * [NewAccount method for add new user]
+ *
+ * @param  [array] $form [$_POST content]
+ * @return [void]       [Redirection]
  */
-  public function login($form)
+  public function newAccount(array $form): void
   {
     // Récupération des différents champs du formulaire avant l'envoi
     // dans l'objet Compte
@@ -40,16 +41,17 @@ class LoginController
       $compte = new Compte($form);
       // Envois de l'objet compte à notre répository
       $this->repository->addCompte($compte);
-
-      return header("location: /index");
+      // Redirection vers notre page d'index
+      header("location: /index");
     }
   }
 
 /**
- * [showLoginForm description]
- * @return [type] [description]
+ * [showLoginForm return view form login]
+ *
+ * @return [void] [description]
  */
-  public function showLoginForm()
+  public function showLoginForm(): void
   {
     require GameController::PATH_VIEW . "/Login/form.html";
   }
