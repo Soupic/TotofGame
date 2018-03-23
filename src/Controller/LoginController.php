@@ -51,7 +51,7 @@ class LoginController
  *
  * @return [void] [description]
  */
-  public function showLoginForm(): void
+  public function showNewAccountForm(): void
   {
     require GameController::PATH_VIEW . "/Login/form.html";
   }
