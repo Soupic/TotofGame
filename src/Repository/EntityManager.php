@@ -34,9 +34,9 @@ class EntityManager
 
 /**
  * [Variable for Database instance]
- * @var [object]
+ * @var [\PDO]
  */
-  private $db;
+  protected $db;
 
 /**
  * [__construct description]
@@ -58,8 +58,8 @@ class EntityManager
         'mysql:host='.
         $this->host .
         ';dbname=' .
-        $this->dbName ,
-        $this->user ,
+        $this->dbName,
+        $this->user,
         $this->password
       );
 

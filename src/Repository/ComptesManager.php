@@ -17,7 +17,7 @@ class ComptesManager extends EntityManager
 
   const MAUVAIS_IDENTIFIANTS = 3;
 
-  
+
   public function addCompte(Compte $info)
   {
   	$req = $this->dbConnect()->prepare('INSERT INTO compte_utilisateur (pseudo , password, adresseMail) VALUES (:pseudo, :password, :adresseMail)');
@@ -77,5 +77,25 @@ class ComptesManager extends EntityManager
       return self::MAIL_UTILISE;
     }
     $req->closeCursor();
+  }
+
+  public function getPseudoAndEmailNotUsed(string $pseudo,string $email)
+  {
+    // var_dump('Test pseudo mail');die;
+    $req = $this->db->prepare(
+      'SELECT pseudo, adresseMail
+      FROM compte_utilisateur
+      WHERE adresseMail = :adresseMail
+      OR pseudo = :pseudo'
+    );
+
+    $req->execute([
+      'adresseMail' => $email,
+      'pseudo' => $pseudo,
+    ]);
+
+    $resultat = $req->fetch();
+
+    var_dump($resultat);die;
   }
 }

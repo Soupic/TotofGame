@@ -35,6 +35,8 @@ class LoginController
   {
       // Vérifcation si le formulaire est valide
     if ($this->isValid($form)) {
+      // On vérifie si le pseudo ou l'adresse mail n'est pas déjà utilisé
+      $this->checkPseudoIsNotUsed($form['pseudo'], $form['adresseMail']);
       // On instancie notre compte avec comme paramètre
       // les info fourni par notre formulaire
       $compte = new Compte($form);
@@ -43,7 +45,7 @@ class LoginController
       // Redirection vers notre page d'index
       header("location: /index");
     } else {
-      // Vérifi quel champs du formulaire est manquant
+      // Vérifi quel sont les champs manquant
       $this->msgForEmptyField($form);
       // Redirige vers la page de login
       header('location: /login');
@@ -61,8 +63,8 @@ class LoginController
   }
 
 /**
- * [Validator of formulair]
- * @param  [array] $form [formulair recive of newAccount method]
+ * [Validator of form]
+ * @param  [array] $form [form recive of newAccount method]
  * @return [bool]       [Return true if form is validated]
  */
   private function isValid(array $form): bool
@@ -75,6 +77,11 @@ class LoginController
 
     //Doit retourné true si le formulaire est valide et false dans le cas contraire
     return true;
+  }
+
+  private function checkPseudoIsNotUsed($pseudo, $email)
+  {
+    $this->repository->getPseudoAndEmailNotUsed($pseudo, $email);
   }
 
 /**
