@@ -33,9 +33,8 @@ class LoginController
  */
   public function newAccount(array $form): void
   {
-    // Récupération des différents champs du formulaire avant l'envoi
-    // dans l'objet Compte
-    if (isset($form) && !empty($form)) {
+      // Vérifcation si le formulaire est valide
+    if ($this->isValid($form)) {
       // On instancie notre compte avec comme paramètre
       // les info fourni par notre formulaire
       $compte = new Compte($form);
@@ -43,6 +42,11 @@ class LoginController
       $this->repository->addCompte($compte);
       // Redirection vers notre page d'index
       header("location: /index");
+    } else {
+      // Vérifi quel champs du formulaire est manquant
+      $this->msgForEmptyField($form);
+      // Redirige vers la page de login
+      header('location: /login');
     }
   }
 
@@ -54,5 +58,39 @@ class LoginController
   public function showNewAccountForm(): void
   {
     require GameController::PATH_VIEW . "/Login/form.html";
+  }
+
+/**
+ * [Validator of formulair]
+ * @param  [array] $form [formulair recive of newAccount method]
+ * @return [bool]       [Return true if form is validated]
+ */
+  private function isValid(array $form): bool
+  {
+    // Doit vérifié si tout les champs du formulaires son correctement renseigné
+    if (!isset($form) || (empty($form['pseudo']) || empty($form['adresseMail']) || empty($form['password']))) {
+
+      return false;
+    }
+
+    //Doit retourné true si le formulaire est valide et false dans le cas contraire
+    return true;
+  }
+
+/**
+ * [msgForEmptyField method for validate form field and return the empty field]
+ * @param  [array] $form [Array composed variable $_POST]
+ * @return [string]       [return error message]
+ */
+  private function msgForEmptyField($form)
+  {
+    // Doit retourné la valeur manquante
+    foreach ($form as $field => $value) {
+      if ($value === '') {
+        // var_dump($field);die;
+        $msg = 'Le ' . $field . ' n\'est pas renseigné';
+      }
+      return $msg;
+    }
   }
 }
