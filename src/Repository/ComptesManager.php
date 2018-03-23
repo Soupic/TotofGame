@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Compte;
+use App\Repository\EntityManager;
 
-class ComptesManager
+class ComptesManager extends EntityManager
 {
 
   // Même chose ici on regroupe les constantes et les
@@ -16,35 +17,7 @@ class ComptesManager
 
   const MAUVAIS_IDENTIFIANTS = 3;
 
-  private $_db;
-
-  public function __construct()
-  {
-    $this->setDb($this->dbConnect());
-  }
-
-  /**
-   * Mehtode d'appel à PDO
-   * @param PDO $db Récupère la class PDO de php (l'antislash indique qu'il doit chercher dans php)
-   */
-  public function setDb(\PDO $db)
-  {
-    $this->_db = $db;
-  }
-
-  public function dbConnect()
-  {
-    try
-    {
-      $db = new \PDO('mysql:host=localhost;dbname=mini_jeu', 'root', 'dawan');
-      return $db;
-    }
-    catch(Exception $e)
-    {
-      die('Erreur : '.$e->getMessage());
-    }
-  }
-
+  
   public function addCompte(Compte $info)
   {
   	$req = $this->dbConnect()->prepare('INSERT INTO compte_utilisateur (pseudo , password, adresseMail) VALUES (:pseudo, :password, :adresseMail)');

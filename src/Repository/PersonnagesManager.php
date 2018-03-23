@@ -1,6 +1,10 @@
 <?php
 
-class PersonnagesManager
+namespace App\Repository;
+
+use App\Repository\EntityManager;
+
+class PersonnagesManager extends EntityManager
 {
 
   /** Les attributs et les constantes
@@ -9,18 +13,6 @@ class PersonnagesManager
   ***/
   const PSEUDO_UTILISE = 1;
 
-  private $_db;
-
-
-  public function __construct()
-  {
-    $this->setDb($this->dbConnect());
-  }
-
-  public function setDb(PDO $db)
-  {
-    $this->_db = $db;
-  }
 
   public function add(Personnage $perso)
   {
@@ -143,16 +135,4 @@ class PersonnagesManager
       $req->closeCursor();
   }
 
-  public function dbConnect()
-  {
-    try
-    {
-      $db = new PDO('mysql:host=localhost;dbname=tp_jeux', 'root', '');
-      return $db;
-    }
-    catch(Exception $e)
-    {
-      die('Erreur : '.$e->getMessage());
-    }
-  }
 }

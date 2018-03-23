@@ -49,7 +49,7 @@ class LoginController
 /**
  * [showLoginForm return view form login]
  *
- * @return [void] [description]
+ * @return [void] [Return page HTML]
  */
   public function showNewAccountForm(): void
   {
