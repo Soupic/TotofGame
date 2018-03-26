@@ -7,18 +7,18 @@ use App\Controller\GameController;
 use App\Entity\Compte;
 
 /**
- * [LoginController gère les connexion utilisateur ainsi que les formulaires]
+ * LoginController gère les connexion utilisateur ainsi que les formulaires
  */
 class LoginController
 {
   /**
-   * [Reference in CompteManager Repository]
+   * Reference in CompteManager Repository
    * @var ComptesManager
    */
   private $repository;
 
 /**
- * [__construct description]
+ * __construct description
  */
   public function __construct()
   {
@@ -26,10 +26,10 @@ class LoginController
   }
 
 /**
- * [NewAccount method for add new user]
+ * NewAccount method for add new user
  *
- * @param  [array] $form [$_POST content]
- * @return [void]       [Redirection]
+ * @param  array $form $_POST content
+ * @return void       Redirection
  */
   public function newAccount(array $form): void
   {
@@ -53,9 +53,9 @@ class LoginController
   }
 
 /**
- * [showLoginForm return view form login]
+ * showLoginForm return view form login
  *
- * @return [void] [Return page HTML]
+ * @return void Return page HTML
  */
   public function showNewAccountForm(): void
   {
@@ -63,9 +63,9 @@ class LoginController
   }
 
 /**
- * [Validator of form]
- * @param  [array] $form [form recive of newAccount method]
- * @return [bool]       [Return true if form is validated]
+ * Validator of form
+ * @param  array $form form recive of newAccount method
+ * @return bool       Return true if form is validated
  */
   private function isValid(array $form): bool
   {
@@ -79,15 +79,32 @@ class LoginController
     return true;
   }
 
-  private function checkPseudoIsNotUsed($pseudo, $email)
+/**
+ * checkPseudoIsNotUsed verify the user or email is not used in databae
+ * @param  string $pseudo Pseudo of the user
+ * @param  string $email  Email of the user
+ * @return void         Return error or redirection about index
+ */
+  private function checkPseudoIsNotUsed(string $pseudo,string $email)
   {
-    $this->repository->getPseudoAndEmailNotUsed($pseudo, $email);
+    // Vérifi si le pseudo ou l'adresse mail n'est pas déjà utilisé.
+    $resultat = $this->repository->getPseudoAndEmailNotUsed($pseudo, $email);
+
+    // Si un résultat est trouvé alors on renvoi un message d'erreur
+    if (!isset($resultat)) {
+
+      $message = "Le pseudo ou l'adresse mail est déjà utilisé";
+
+      return $message;
+    }
+    // Sinon on retourne la page d'acceuil
+    header("location: /index");
   }
 
 /**
- * [msgForEmptyField method for validate form field and return the empty field]
- * @param  [array] $form [Array composed variable $_POST]
- * @return [string]       [return error message]
+ * msgForEmptyField method for validate form field and return the empty field
+ * @param  array $form Array composed variable $_POST
+ * @return string       return error message
  */
   private function msgForEmptyField($form)
   {

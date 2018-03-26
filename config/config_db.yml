@@ -1,0 +1,5 @@
+database:
+  hostname: localhost
+  name: mini_jeu
+  user: root
+  password: dawan

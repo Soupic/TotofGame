@@ -79,6 +79,12 @@ class ComptesManager extends EntityManager
     $req->closeCursor();
   }
 
+  /**
+   * getPseudoAndEmailNotUsed verifiy the user or email is present in database
+   * @param  string $pseudo pseudo the user
+   * @param  string $email  email the user
+   * @return [type]         [description]
+   */
   public function getPseudoAndEmailNotUsed(string $pseudo,string $email)
   {
     // var_dump('Test pseudo mail');die;
@@ -96,6 +102,10 @@ class ComptesManager extends EntityManager
 
     $resultat = $req->fetch();
 
-    var_dump($resultat);die;
+    if($resultat)
+    {
+      return $resultat;
+    }
+    $req->closeCursor();
   }
 }
