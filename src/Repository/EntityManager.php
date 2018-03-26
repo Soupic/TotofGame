@@ -9,37 +9,37 @@ class EntityManager
 {
 
 /**
- * [Name of host for Database access]
- * @var [string]
+ * Name of host for Database access
+ * @var string
  */
   private $host = 'localhost';
 
 /**
- * [Database Name]
- * @var [string]
+ * Database Name
+ * @var string
  */
   private $dbName = 'mini_jeu';
 
 /**
- * [User Name]
- * @var [string]
+ * User Name
+ * @var string
  */
   private $user = 'root';
 
 /**
- * [Password DataBase]
- * @var [string]
+ * Password DataBase
+ * @var string
  */
   private $password = 'dawan';
 
 /**
- * [Variable for Database instance]
- * @var [\PDO]
+ * Variable for Database instance
+ * @var \PDO
  */
   protected $db;
 
 /**
- * [__construct description]
+ * __construct description
  */
   function __construct()
   {
@@ -47,8 +47,8 @@ class EntityManager
   }
 
 /**
- * [dbConnect result in instance of PDO for connect to Database]
- * @return [object] [Retourn instance of PDO]
+ * dbConnect result in instance of PDO for connect to Database
+ * @return object Return instance of PDO
  */
   public function dbConnect()
   {
@@ -69,6 +69,19 @@ class EntityManager
     {
       die('Erreur : '.$e->getMessage());
     }
+  }
+
+/**
+ * readConfDb read yaml file conf
+ * @return array Return array with in config database
+ */
+  private function readConfDb()
+  {
+    $fileConfDb = PATH_GAME . "/config/config_db.yml";
+
+    $yamlParses = yaml_parse_file($fileConfDb);
+
+    return $yamlParses;
   }
 
 }
