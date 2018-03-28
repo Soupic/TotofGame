@@ -36,7 +36,7 @@ class ComptesManager extends EntityManager
 
   public function getCompte($infoPseudo, $infoPassword)
   {
-
+    var_dump($infoPseudo);die;
     $req = $this->dbConnect()->prepare('SELECT * FROM compte_utilisateur WHERE pseudo = :pseudo');
 
     $req->execute([':pseudo' => $infoPseudo]);

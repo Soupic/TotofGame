@@ -13,6 +13,7 @@ class RouteController
   private $routes = [
     "index" => "/index",
     "login" => "/login",
+    "connect" => "/connect",
   ];
 
   /**
@@ -20,7 +21,7 @@ class RouteController
    * @param  [string] $path URL
    * @return [string] retourn l'url si valide ou erreur 404
    */
-  public function parseRoute($path)
+  public function parseRoute(string $path)
   {
     // On vérifie si $path n'est pas null et n'est pas vide
     if (isset($path) && !empty($path)) {
@@ -42,7 +43,7 @@ class RouteController
     }
   }
 
-  public function getController($pathName, $post = null)
+  public function getController(string $pathName,array $post = null)
   {
     switch ($pathName) {
       case 'index':
@@ -55,6 +56,13 @@ class RouteController
           $login->newAccount($_POST);
         }
         $login->showNewAccountForm();
+        break;
+      case 'connect':
+        $connect = new LoginController;
+        if (!empty($_POST)) {
+          $connect->connectUser($_POST);
+        }
+        $connect->showConnectUser();
         break;
       default:
         $this->error404;

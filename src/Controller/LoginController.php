@@ -52,6 +52,26 @@ class LoginController
     }
   }
 
+  public function connectUser(array $form)
+  {
+    // Récupération des champs du formulaire si valide
+    if ($this->isValid($form)) {
+      // Vérification de la présence de l'utilisateur dans la base de donnée
+      $user = $this->repository()->getCompte($form['pseudo'], $form['password']);
+
+      var_dump($user);die;
+    }
+
+    // Si l'utilisateur existe on stock ses informations dans la variable de session
+
+    // On redirige l'utilisateur sur la page d'index
+  }
+
+  public function showConnectUser(): void
+  {
+    require GameController::PATH_VIEW . "/Login/connect.html";
+  }
+
 /**
  * showLoginForm return view form login
  *
@@ -69,14 +89,23 @@ class LoginController
  */
   private function isValid(array $form): bool
   {
-    // Doit vérifié si tout les champs du formulaires son correctement renseigné
-    if (!isset($form) || (empty($form['pseudo']) || empty($form['adresseMail']) || empty($form['password']))) {
+    // var_dump($form);die;
+    if ($form['CreerCompte'] === 'CreerCompte') {
+      // Doit vérifié si tout les champs du formulaires son correctement renseigné
+      if (!isset($form) || (empty($form['pseudo']) || empty($form['adresseMail']) || empty($form['password']))) {
 
-      return false;
+        return false;
+      }
+
+      //Doit retourné true si le formulaire est valide et false dans le cas contraire
+      return true;
+    } elseif ($form['Connexion'] === 'Connexion') {
+      if (!isset($form) || (empty($form['pseudo']) || empty($form['password']))) {
+        return false;
+      }
+      //Doit retourné true si le formulaire est valide et false dans le cas contraire
+      return true;
     }
-
-    //Doit retourné true si le formulaire est valide et false dans le cas contraire
-    return true;
   }
 
 /**
