@@ -39,7 +39,7 @@ class EntityManager
   protected $db;
 
 /**
- * __construct description
+ * __construct inject method dbConnect for connect to the Database
  */
   function __construct()
   {
@@ -47,7 +47,7 @@ class EntityManager
   }
 
 /**
- * dbConnect result in instance of PDO for connect to Database
+ * dbConnect result in instance of PDO for connect to the Database
  * @return object Return instance of PDO
  */
   public function dbConnect()
