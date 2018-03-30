@@ -9,7 +9,7 @@ use App\Entity\Compte;
 /**
  * LoginController gère les connexion utilisateur ainsi que les formulaires
  */
-class LoginController
+class LoginController extends SessionController
 {
   /**
    * Reference in CompteManager Repository
@@ -58,9 +58,13 @@ class LoginController
     if ($this->isValid($form)) {
       // Vérification de la présence de l'utilisateur dans la base de donnée
       $user = $this->repository->getCompte($form['pseudo'], $form['password']);
+      // Si l'utilisateur n'est pas présent
       if (isset($user) || empty($user)) {
-        var_dump($user);die;
+        // On redirige l'utilisateur vers la page de création de compte
+        $this->showNewAccountForm();
       }
+      // Si l'utilisateur exite on stock les données dans $_SESSION
+
     }
 
     // Si l'utilisateur existe on stock ses informations dans la variable de session
