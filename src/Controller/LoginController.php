@@ -57,9 +57,10 @@ class LoginController
     // Récupération des champs du formulaire si valide
     if ($this->isValid($form)) {
       // Vérification de la présence de l'utilisateur dans la base de donnée
-      $user = $this->repository()->getCompte($form['pseudo'], $form['password']);
-
-      var_dump($user);die;
+      $user = $this->repository->getCompte($form['pseudo'], $form['password']);
+      if (isset($user) || empty($user)) {
+        var_dump($user);die;
+      }
     }
 
     // Si l'utilisateur existe on stock ses informations dans la variable de session
@@ -135,7 +136,7 @@ class LoginController
  * @param  array $form Array composed variable $_POST
  * @return string       return error message
  */
-  private function msgForEmptyField($form)
+  private function msgForEmptyField(array $form): string
   {
     // Doit retourné la valeur manquante
     foreach ($form as $field => $value) {
